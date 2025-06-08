@@ -1,0 +1,21 @@
+
+Neel Shah
+Azure Cloud Solutions Architect | Microsoft Certified Azure Architect Expert
+Email: neel.shah@example.com | Ahmedabad, IN
+
+Summary:
+Seasoned Azure architect with 6+ years of experience in building enterprise-grade applications on Azure.
+
+Skills:
+- Azure (App Services, AKS, Cosmos DB)
+- PowerShell, Azure CLI
+- ARM templates, Terraform
+- CI/CD with Azure DevOps
+
+Experience:
+Azure Architect, Capgemini (2019–Present)
+- Migrated legacy apps to Azure AKS.
+- Built secure Azure landing zones for multiple clients.
+
+Education:
+MCA – Nirma University

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Matcher | AI-Powered Matching</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --dark: #1e40af;
+            --light: #93c5fd;
+            --bg: #f0f9ff;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.15);
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.98);
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 20px;
+            border-bottom: none;
+        }
+
+        .card-header h3 {
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid #bfdbfe;
+            background-color: #f8fafc;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+
+        textarea.form-control {
+            min-height: 180px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--dark);
+            border-color: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .file-upload-hint {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        .result-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .result-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .similarity-badge {
+            background-color: var(--primary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .alert-custom {
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            background-color: #eff6ff;
+            transition: all 0.3s ease;
+        }
+
+        hr.divider {
+            border-top: 1px solid rgba(255,255,255,0.3);
+            width: 60%;
+            margin: 15px auto;
+        }
+
+        /* Skill Gap Highlighting Styles */
+        .skill-gap-container {
+            margin-top: 8px;
+            padding-left: 10px;
+        }
+        .missing-skill-badge {
+            background-color: #ffc107;
+            color: #212529;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 10px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        .top-rank-tag {
+        background-color: #16a34a; /* green */
+        color: white;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 12px;
+        display: inline-block;
+        margin-left: 8px;
+    }
+
+    /* Optional: rank-specific color variant */
+    .rank-1 {
+    background-color: #d32f2f; /* Deep Red */
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.75rem;  /* smaller font size */
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 5px rgba(211, 47, 47, 0.4);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.rank-2 {
+    background-color: #1976d2; /* Medium Blue */
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.75rem;  /* smaller font size */
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 5px rgba(25, 118, 210, 0.4);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.rank-3 {
+    background-color: #757575; /* Grey */
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.75rem;  /* smaller font size */
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 5px rgba(117, 117, 117, 0.4);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Optional: star icon */
+.rank-1::before, .rank-2::before, .rank-3::before {
+    content: "★";
+    font-size: 0.9rem;
+    color: white;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3 class="mb-2 text-white">
+                        <i class="fas fa-robot me-2"></i>
+                        Naukari<span style="color: #FFD700; font-weight: 600;">AI</span>
+                    </h3>
+                    <p class="mb-1 text-white" style="font-weight: 500; font-size: 1.1rem;">
+                        Smart Resume Matcher
+                    </p>
+                    <hr style="border-top: 1px solid rgba(255,255,255,0.3); width: 60%; margin: 12px auto;">
+                    <p class="small mb-0 text-white" style="opacity: 0.9;">
+                        Upload job description and resumes to find perfect candidates
+                    </p>
+                </div>
+                <div class="card-body">
+                    <form action="/matcher" method="post" enctype="multipart/form-data" id="resumeForm">
+                        <!-- Job Description Input -->
+                        <div class="mb-4">
+                            <label for="job_description" class="form-label">
+                                <i class="fas fa-file-alt me-2"></i> Job Description
+                            </label>
+                            <textarea class="form-control" id="job_description" name="job_description" rows="6" placeholder="Paste the job description here...">{% if job_description %}{{ job_description }}{% endif %}</textarea>
+                        </div>
+
+                        <!-- Resume Upload -->
+                        <div class="mb-4">
+                            <label for="resumes" class="form-label">
+                                <i class="fas fa-file-upload me-2"></i> Upload Resumes
+                            </label>
+                            <input type="file" class="form-control" id="resumes" name="resumes" multiple required accept=".pdf, .docx, .txt">
+                            <div class="file-upload-hint">Supported formats: PDF, DOCX, TXT (5 or more recommended)</div>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-grow-1">
+                                <i class="fas fa-search me-2"></i> Match Resumes
+                            </button>
+                            <button type="button" id="clearForm" class="btn btn-outline-primary">
+                                <i class="fas fa-eraser me-2"></i> Clear
+                            </button>
+                        </div>
+                    </form>
+
+                    {% if message %}
+                    <div class="alert alert-info alert-custom mt-4" id="resultsContainer">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="alert-heading mb-0">{{ message }}</h5>
+                            <div>
+                                <button type="button" id="downloadResults" class="btn btn-sm btn-success me-2">
+                                    <i class="fas fa-file-pdf me-1"></i> Download PDF
+                                </button>
+                                <button type="button" id="clearResults" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-times me-1"></i> Clear Results
+                                </button>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="mt-3">
+                            {% for result in results %}
+                            <div class="result-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fas fa-file-alt me-2" style="color: var(--primary);"></i>
+                                        {{ result.filename }}
+
+                                        <!-- NEW: Top Rank Badge -->
+                                        {% if loop.index <= 3 %}
+<span class="top-rank-tag rank-{{ loop.index }}">
+    {% if loop.index == 1 %}Top 1{% elif loop.index == 2 %}Top 2{% elif loop.index == 3 %}Top 3{% endif %}
+</span>
+{% endif %}
+
+
+                                    </div>
+                                    <span class="similarity-badge">{{ result.score }}% Match</span>
+                                </div>
+
+                                {% if result.missing_skills %}
+                                <div class="skill-gap-container">
+                                    <small class="text-muted">Missing skills:</small>
+                                    <div class="mt-1">
+                                        {% for skill in result.missing_skills %}
+                                        <span class="missing-skill-badge">{{ skill }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('clearForm').addEventListener('click', function () {
+        // Clear the job description textarea
+        document.getElementById('job_description').value = '';
+
+        // Clear the file input (resumes)
+        document.getElementById('resumes').value = '';
+    });
+
+    {% if message %}
+    document.getElementById('clearResults').addEventListener('click', function () {
+        document.getElementById('resultsContainer').style.display = 'none';
+        document.getElementById('resumeForm').reset();
+    });
+
+    document.getElementById('downloadResults').addEventListener('click', function () {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/download_pdf';
+
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'results_data';
+        input.value = JSON.stringify({{ results|tojson }});
+        form.appendChild(input);
+
+        const jdInput = document.createElement('input');
+        jdInput.type = 'hidden';
+        jdInput.name = 'job_description';
+        jdInput.value = document.getElementById('job_description').value || '';
+        form.appendChild(jdInput);
+
+        document.body.appendChild(form);
+        form.submit();
+    });
+    {% endif %}
+</script>
+</body>
+</html>
