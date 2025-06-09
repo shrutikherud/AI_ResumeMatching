@@ -1,3 +1,12 @@
+[![HTML5](https://img.shields.io/badge/html5-E34F26.svg?style=flat&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
+[![CSS3](https://img.shields.io/badge/css3-1572B6.svg?style=flat&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![Bootstrap](https://img.shields.io/badge/bootstrap-7952B3.svg?style=flat&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
+[![JavaScript](https://img.shields.io/badge/javascript-F7DF1E.svg?style=flat&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Python](https://img.shields.io/badge/python-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/flask-000000.svg?style=flat&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![NLP](https://img.shields.io/badge/NLP-4B8BBE.svg?style=flat&logo=spacy&logoColor=white)](https://en.wikipedia.org/wiki/Natural_language_processing)
+
+
 # JobFitAI - Smart Resume Matcher
 
 A smart resume screening tool that uses AI and NLP to match candidates with job descriptions. It automates shortlisting, identifies skill gaps, making hiring faster and more accurate for recruiters and job seekers alike.
